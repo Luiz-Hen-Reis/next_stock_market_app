@@ -15,11 +15,12 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-size: 1.6rem;
     font-family: ${({ theme }) => theme.font.family.default};
+    color: ${({ theme }) => theme.colors.primaryColor};
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: ${({ theme }) => theme.font.family.secondary};
-    margin: ${({ theme }) => theme.spacings.large} 0;
+    margin: 0;
   }
 
   p {
@@ -32,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.secondaryColor};
+    
   }
 
   .table {

@@ -1,7 +1,7 @@
 export const theme = {
   colors: {
-    primaryColor: '#0A1128',
-    secondaryColor: '#dc143c',
+    primaryColor: '#F1F1F1',
+    darkSlateGrey: 'rgb(47,79,79)',
     white: '#FFFFFF',
     mediumGray: '#DDDDDD',
   },
@@ -25,7 +25,7 @@ export const theme = {
     lteMedium: '(max-width: 768px)',
   },
   spacings: {
-    xsmall: '8rem',
+    xsmall: '.8rem',
     small: '1.6rem',
     medium: '2.4rem',
     large: '3.2rem',
