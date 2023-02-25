@@ -1,6 +1,88 @@
+import { Heading, Icon, LoginContainer } from 'components';
+import { CoinStack } from '@styled-icons/boxicons-solid';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useContext } from 'react';
+import Head from 'next/head';
+import { AuthContext } from 'contexts/AuthContext';
+import toCapitalize from 'helpers/toCapitalize';
 
-export default function Index() {
+export default function Home() {
+  const [isRegistered, setIsRegistered] = useState<boolean>(true);
+  const { register, handleSubmit } = useForm();
+  const { signIn } = useContext(AuthContext);
+
+  interface SignInData {
+    email: string;
+    password: string;
+  }
+
+  async function handleSignIn(data: SignInData) {
+    await signIn(data);
+  }
+
   return (
-    <h1>Hello World</h1>
-  )
+    <>
+      <Head>
+        <title>
+          {isRegistered
+            ? 'Login | Stock Market App'
+            : 'Register | Stock Market App'}
+        </title>
+      </Head>
+      <LoginContainer>
+        <header>
+          <Icon>
+            <CoinStack size={60} />
+          </Icon>
+          <Heading title="Stock Market App" />
+        </header>
+        <div>
+          <form onSubmit={handleSubmit(handleSignIn)}>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                {...register('email')}
+                name="email"
+                type="email"
+                placeholder="Your email adress"
+              />
+              {!isRegistered && (
+                <>
+                  <label htmlFor="name">Name</label>
+                  <input
+                    {...register('name')}
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                  />
+                </>
+              )}
+              <label htmlFor="name">Password</label>
+              <input
+                {...register('password')}
+                name="password"
+                type="password"
+                placeholder="Your password"
+              />
+              {isRegistered && (
+                <p onClick={() => setIsRegistered(false)}>
+                  Not Registered? Click here
+                </p>
+              )}
+              <input
+                type="submit"
+                value={!isRegistered ? 'Register' : 'Log In'}
+              />
+              {!isRegistered && (
+                <p onClick={() => setIsRegistered(true)}>
+                  Already have an account? Log In
+                </p>
+              )}
+            </div>
+          </form>
+        </div>
+      </LoginContainer>
+    </>
+  );
 }

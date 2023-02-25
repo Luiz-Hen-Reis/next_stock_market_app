@@ -13,7 +13,7 @@ export const handler: NextApiHandler = async (req, res) => {
   });
 
   if (!user) {
-    return res.status(400).json({ status: 'Cannot find user' });
+    return res.status(400).send({ status: 'Cannot find user' });
   }
 
   try {
@@ -36,7 +36,7 @@ export const handler: NextApiHandler = async (req, res) => {
       });
     }
   } catch {
-    res.status(500);
+    res.status(500).send({ status: 'Internal Server Error' });
   }
 };
 
