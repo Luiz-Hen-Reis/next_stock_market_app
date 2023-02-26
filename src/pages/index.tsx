@@ -5,20 +5,36 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import Head from 'next/head';
 import { AuthContext } from 'contexts/AuthContext';
-import toCapitalize from 'helpers/toCapitalize';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 export default function Home() {
   const [isRegistered, setIsRegistered] = useState<boolean>(true);
   const { register, handleSubmit } = useForm();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signUp } = useContext(AuthContext);
 
   interface SignInData {
     email: string;
     password: string;
   }
 
-  async function handleSignIn(data: SignInData) {
-    await signIn(data);
+  interface RegisterData {
+    email: string;
+    name: string;
+    password: string;
+  }
+
+  async function handleSignIn(data: SignInData | RegisterData) {
+    try {
+      if (isRegistered) {
+        await signIn(data);
+        return;
+      }
+
+      return await signUp(data);
+    } catch {
+      alert('Error, please try again');
+    }
   }
 
   return (
@@ -45,6 +61,7 @@ export default function Home() {
                 {...register('email')}
                 name="email"
                 type="email"
+                required
                 placeholder="Your email adress"
               />
               {!isRegistered && (
@@ -54,6 +71,7 @@ export default function Home() {
                     {...register('name')}
                     name="name"
                     type="text"
+                    required
                     placeholder="Your name"
                   />
                 </>
@@ -63,11 +81,12 @@ export default function Home() {
                 {...register('password')}
                 name="password"
                 type="password"
+                required
                 placeholder="Your password"
               />
               {isRegistered && (
                 <p onClick={() => setIsRegistered(false)}>
-                  Not Registered? Click here
+                  Not Registered? Sign Up
                 </p>
               )}
               <input
@@ -86,3 +105,20 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'nextstockmarketapp.token': token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/user/home',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

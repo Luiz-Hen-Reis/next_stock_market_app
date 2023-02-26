@@ -20,12 +20,7 @@ export const Container = styled.div`
        }
 
        > div > form > p {
-        margin: 0;
-       text-align: right;
-        cursor: pointer;
-        font-weight: 300;
-        font-size: 1.4rem;
-        ${theme.colors.mediumGray};
+       
        }
 
        > div > form > div {
@@ -37,6 +32,15 @@ export const Container = styled.div`
         font-size: 1.8rem;
         color: ${theme.colors.mediumGray};
         margin: .5rem 0;
+      }
+
+      > p {
+        margin: 1rem;
+       text-align: right;
+        cursor: pointer;
+        font-weight: 300;
+        font-size: 1.4rem;
+        color: ${theme.colors.mediumGray};
       }
 
       >input {

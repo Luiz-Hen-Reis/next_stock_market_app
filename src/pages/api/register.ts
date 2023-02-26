@@ -2,6 +2,7 @@ import { NextApiHandler } from 'next';
 import bcrypt from 'bcrypt';
 import prisma from 'libs/prisma';
 import jwt from 'jsonwebtoken';
+import toCapitalize from 'helpers/toCapitalize';
 
 export const handler: NextApiHandler = async (req, res) => {
   const { name, email, password } = req.body;
@@ -28,7 +29,7 @@ export const handler: NextApiHandler = async (req, res) => {
         token,
         user: {
           id: user.id,
-          name: user.name,
+          name: toCapitalize(user.name),
           email: user.email,
         },
       });
@@ -37,7 +38,7 @@ export const handler: NextApiHandler = async (req, res) => {
     }
   }
 
-  return res.status(200).json({ status: 'User already exists' });
+  return res.status(200).json({ userAlreadyExist });
 };
 
 export default handler;

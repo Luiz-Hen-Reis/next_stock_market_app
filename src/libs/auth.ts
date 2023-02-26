@@ -10,18 +10,29 @@ interface SignInRequestData {
   password: string;
 }
 
-export async function signInRequest({ email, password }: SignInRequestData) {
-  try {
-    const request = await axios.post('/api/login', { email, password });
-    return request.data;
-  } catch (error) {}
+interface RegisterRequestData {
+  email: string;
+  name: string;
+  password: string;
 }
 
-export async function recoverUserInformation(jwt: string) {
-  try {
-    const decoded: JwtData = jwt_decode(jwt);
-    const userId = decoded.id;
-    const request = await axios.get(`/api/user/${userId}`);
-    return request.data;
-  } catch {}
+export async function signInRequest({ email, password }: SignInRequestData) {
+  const request = await axios.post('/api/login', { email, password });
+  return request.data;
+}
+
+export async function recoverUserInformation(token: string) {
+  const decoded: JwtData = jwt_decode(token);
+  const userId = decoded.id;
+  const request = await axios.get(`/api/user/${userId}`);
+  return request.data;
+}
+
+export async function registerRequest({
+  email,
+  name,
+  password,
+}: RegisterRequestData) {
+  const request = await axios.post('/api/register', { email, name, password });
+  return request.data;
 }

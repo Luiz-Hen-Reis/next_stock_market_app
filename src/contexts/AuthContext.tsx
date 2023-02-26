@@ -1,6 +1,11 @@
-import { signInRequest } from 'libs/auth';
+import { useEffect } from 'react';
+import {
+  recoverUserInformation,
+  registerRequest,
+  signInRequest,
+} from 'libs/auth';
 import Router from 'next/router';
-import { setCookie } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { createContext, useState } from 'react';
 
 interface User {
@@ -13,11 +18,17 @@ interface SignInData {
   password: string;
 }
 
+interface RegisterData {
+  email: string;
+  password: string;
+}
+
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User;
   signIn: (data: SignInData) => Promise<void>;
   signOut: () => void;
+  signUp: (data: RegisterData) => Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -27,24 +38,55 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = !!user;
 
-  async function signIn({ email, password }) {
-    try {
-      const { user, token } = await signInRequest({ email, password });
+  useEffect(() => {
+    const { 'nextstockmarketapp.token': token } = parseCookies();
 
-      setCookie(undefined, 'nextstockmarketapp.token', token, {
-        maxAge: 60 * 60 * 1, // 1 hour
+    if (token) {
+      recoverUserInformation(token).then((response) => {
+        setUser(response);
       });
+    }
+  }, []);
 
-      setUser(user);
+  async function signIn({ email, password }) {
+    const { user, token } = await signInRequest({ email, password });
 
-      Router.push('/user/home');
-    } catch (error) {}
+    setCookie(undefined, 'nextstockmarketapp.token', token, {
+      maxAge: 60 * 60 * 1, // 1 hour
+    });
+
+    setUser(user);
+
+    Router.push('/user/home');
   }
 
-  async function signOut() {}
+  function signOut() {}
+
+  async function signUp({ email, name, password }) {
+    const { user, token, userAlreadyExist } = await registerRequest({
+      email,
+      name,
+      password,
+    });
+
+    if (userAlreadyExist) {
+      alert('Email that was provided already exist. Log in?');
+      return;
+    }
+
+    setCookie(undefined, 'nextstockmarketapp.token', token, {
+      maxAge: 60 * 60 * 1, // 1 hour
+    });
+
+    setUser(user);
+
+    Router.push('/user/home');
+  }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, signIn, signOut, signUp: signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );
