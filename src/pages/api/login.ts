@@ -34,6 +34,7 @@ export const handler: NextApiHandler = async (req, res) => {
           name: toCapitalize(user.name),
           email: user.email,
         },
+        status: await bcrypt.compare(password, user.password),
       });
     }
   } catch {

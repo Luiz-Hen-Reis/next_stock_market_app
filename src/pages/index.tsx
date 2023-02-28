@@ -1,12 +1,13 @@
+import Head from 'next/head';
 import { Heading, Icon, LoginContainer } from 'components';
 import { CoinStack } from '@styled-icons/boxicons-solid';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useContext } from 'react';
-import Head from 'next/head';
 import { AuthContext } from 'contexts/AuthContext';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const [isRegistered, setIsRegistered] = useState<boolean>(true);
@@ -28,12 +29,15 @@ export default function Home() {
     try {
       if (isRegistered) {
         await signIn(data);
+        toast.success('Welcome!');
         return;
       }
 
-      return await signUp(data);
+      await signUp(data);
+      toast.success('Welcome');
+      return;
     } catch {
-      alert('Error, please try again');
+      toast.error('Email or Password Wrong. Try again');
     }
   }
 
