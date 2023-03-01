@@ -15,8 +15,8 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-size: 1.6rem;
     font-family: ${({ theme }) => theme.font.family.default};
-    color: ${({ theme }) => theme.colors.primaryColor};
-    background-color: ${({ theme }) => theme.colors.darkSlateGrey};
+    color: ${({ theme }) => theme.colors.darkSlateGrey};
+    background-color: ${({ theme }) => theme.colors.primaryColor};
   }
 
   h1, h2, h3, h4, h5, h6 {

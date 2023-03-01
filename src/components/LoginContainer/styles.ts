@@ -16,11 +16,8 @@ export const Container = styled.div`
         & ${Heading} {
         font-size: 3.1rem;
         text-align: center;
+        color: ${theme.colors.darkSlateGrey};
        }
-       }
-
-       > div > form > p {
-       
        }
 
        > div > form > div {
@@ -30,7 +27,7 @@ export const Container = styled.div`
 
       >label {
         font-size: 1.8rem;
-        color: ${theme.colors.mediumGray};
+        color: ${theme.colors.darkSlateGrey};
         margin: .5rem 0;
       }
 
@@ -40,14 +37,14 @@ export const Container = styled.div`
         cursor: pointer;
         font-weight: 300;
         font-size: 1.4rem;
-        color: ${theme.colors.mediumGray};
+        color: ${theme.colors.darkSlateGrey};
       }
 
       >input {
         height: 5rem;
         border-radius: .4rem;
         outline: none;
-        border: none;
+        border: 1px solid ${theme.colors.darkSlateGrey};
         font-size: 1.6rem;
         padding-left: .8rem;
 
@@ -59,11 +56,15 @@ export const Container = styled.div`
 
       >input[type='submit'] {
         cursor: pointer;
+        background-color: ${theme.colors.darkSlateGrey};
         margin-top: 2rem;
         transition: all ease .3s;
+        color: ${theme.colors.white};
+        font-weight: 500;
 
         &:hover {
             background-color: ${theme.colors.mediumGray};
+            color: ${theme.colors.darkSlateGrey};
         }
       }
        }

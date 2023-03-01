@@ -8,6 +8,7 @@ import { AuthContext } from 'contexts/AuthContext';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { toast } from 'react-toastify';
+import { theme } from 'styles/theme';
 
 export default function Home() {
   const [isRegistered, setIsRegistered] = useState<boolean>(true);
@@ -53,7 +54,7 @@ export default function Home() {
       <LoginContainer>
         <header>
           <Icon>
-            <CoinStack size={60} />
+            <CoinStack size={60} color={theme.colors.darkSlateGrey} />
           </Icon>
           <Heading title="Stock Market App" />
         </header>
