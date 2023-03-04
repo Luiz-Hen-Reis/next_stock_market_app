@@ -5,8 +5,9 @@ import {
   signInRequest,
 } from 'libs/auth';
 import Router from 'next/router';
-import { parseCookies, setCookie } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { createContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface User {
   name: string;
@@ -60,8 +61,6 @@ export function AuthProvider({ children }) {
     Router.push('/user/home');
   }
 
-  function signOut() {}
-
   async function signUp({ email, name, password }) {
     const { user, token, userAlreadyExist } = await registerRequest({
       email,
@@ -83,9 +82,16 @@ export function AuthProvider({ children }) {
     Router.push('/user/home');
   }
 
+  function signOut() {
+    destroyCookie(undefined, 'nextstockmarketapp.token', { path: '/' });
+    setUser(null);
+    toast.success('Logged Out!')
+    Router.push('/');
+  }
+
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, signIn, signOut, signUp: signUp }}
+      value={{ user, isAuthenticated, signIn, signOut, signUp }}
     >
       {children}
     </AuthContext.Provider>
