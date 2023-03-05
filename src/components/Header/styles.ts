@@ -43,6 +43,22 @@ export const Container = styled.header`
             font-size: 1.4rem;
             cursor: pointer;
         }
+
+        a {
+            all: unset;
+            color: ${theme.colors.mediumGray};
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            border-bottom: 1px dotted ${theme.colors.mediumGray};
+            transition: all ease .3s;
+
+            &:hover {
+                color: ${theme.colors.primaryColor};
+                border-bottom: 1px dotted ${theme.colors.primaryColor};
+            }
         }
+        }
+
     `}
 `;

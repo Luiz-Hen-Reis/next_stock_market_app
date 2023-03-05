@@ -41,4 +41,11 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     overflow-y: auto;
   }
+
+  .active {
+                color: ${({ theme }) => theme.colors.primaryColor};
+                border-bottom: 1px dotted ${({ theme }) =>
+                  theme.colors.primaryColor};
+                font-weight: 700;
+            }
 `;

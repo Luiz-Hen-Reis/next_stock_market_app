@@ -5,9 +5,11 @@ import { Icon, Heading } from 'components';
 import { AuthContext } from 'contexts/AuthContext';
 import { useContext } from 'react';
 import { theme } from 'styles/theme';
+import Link from 'next/link';
 
 export default function Header() {
   const { user, signOut } = useContext(AuthContext);
+
 
   return (
     <>
@@ -21,6 +23,10 @@ export default function Header() {
           </Icon>
           <Heading title="Stock Market App" as='h2' />
         </span>
+        <nav>
+          <Link href={'/user/home/'}>Trading Page</Link>
+          <Link href={'/user/news/'}>News</Link>
+        </nav>
         <nav>
           <div>
             <Icon>

@@ -1,18 +1,22 @@
 import { Content, Header } from 'components';
-import { AuthContext } from 'contexts/AuthContext';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import React, { useContext } from 'react';
+import { StockSymbol } from '../../../types/alphaVantageApiTypes';
+import api from '../../libs/alphaVantageApi';
 
-export default function Home() {
-  const { user } = useContext(AuthContext);
+const initialSymbol = 'GM';
 
+interface Props {
+  data: StockSymbol;
+}
+
+export default function Home({ data }: Props) {
   return (
     <>
       <Header />
-      <Content />
+      <Content data={data} />
     </>
-  )
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -27,7 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  const data = await api.getStockInfo(initialSymbol);
+
   return {
-    props: {},
+    props: {
+      data,
+    },
   };
 };
