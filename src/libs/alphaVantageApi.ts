@@ -18,7 +18,7 @@ export default {
   },
   getNews: async () => {
     const response = await axios.get(
-      `${BASE_URL}/query?function=NEWS_SENTIMENT&topics=technology&limit=5&apikey=${API_KEY}`,
+      `${BASE_URL}/query?function=NEWS_SENTIMENT&topics=technology&limit=50&apikey=${API_KEY}`,
     );
     return response.data;
   },

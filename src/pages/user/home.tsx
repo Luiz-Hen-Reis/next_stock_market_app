@@ -1,6 +1,7 @@
-import { Content, Header } from 'components';
+import { TradingPage } from 'components';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import Template from 'template';
 import { StockSymbol } from '../../../types/alphaVantageApiTypes';
 import api from '../../libs/alphaVantageApi';
 
@@ -12,10 +13,9 @@ interface Props {
 
 export default function Home({ data }: Props) {
   return (
-    <>
-      <Header />
-      <Content data={data} />
-    </>
+    <Template>
+      <TradingPage data={data} />
+    </Template>
   );
 }
 

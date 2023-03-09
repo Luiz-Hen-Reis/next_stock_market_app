@@ -10,7 +10,7 @@ interface Props {
   data: StockSymbol;
 }
 
-export default function Content({ data }: Props) {
+export default function TradingPage({ data }: Props) {
   const router = useRouter();
   const { symbol } = router.query;
   const [stockSymbol, setStockSymbol] = useState<StockSymbol>(

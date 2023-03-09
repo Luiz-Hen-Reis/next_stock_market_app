@@ -12,3 +12,17 @@ export interface StockSymbol {
     '10. change percent': string;
   };
 }
+
+export interface NewsType {
+  items: string;
+  feed: Post[]
+}
+
+export interface Post {
+    title: string,
+    url: string,
+    time_published: string,
+    authors: [string],
+    summary: string,
+    banner_image: string,
+}
